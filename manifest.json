@@ -1,14 +1,21 @@
 
 {
   "manifest_version": 3,
-  "name": "Link Saver with Folders",
+  "name": "Link Saver",
   "version": "1.0",
+  "description": "Save and sync folders + links with Chrome bookmarks",
   "action": {
     "default_popup": "index.html",
-    "default_icon": "icon.png" 
+    "default_title": "Link Saver"
   },
   "permissions": [
-    "tabs",
-    "storage"
-  ]
+    "bookmarks",
+    "storage",
+    "tabs"
+  ],
+  "host_permissions": [],
+  "icons": {
+    "48": "icon48.png",
+    "128": "icon128.png"
+  }
 }

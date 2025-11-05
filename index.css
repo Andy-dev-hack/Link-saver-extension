@@ -6,132 +6,133 @@ body {
   color: #eaeaea;
   min-width: 350px;
   min-height: 500px;
-  
-  /* 🌟 Extension Border Glow */
-  border-radius: 10px; 
-  box-shadow: 
-      0 0 10px rgba(74, 110, 169, 0.5), 
-      0 0 20px rgba(74, 110, 169, 0.3);
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(74, 110, 169, 0.5),
+              0 0 20px rgba(74, 110, 169, 0.3);
 }
 
-/* --- Extension Title Style --- */
+/* Title */
 #extension-title {
-    font-size: 2.2em;
-    font-weight: bold;
-    text-align: center;
-    margin: 0 0 20px 0;
-    color: #fff;
-    /* Blue Neon Glow Effect */
-    text-shadow: 
-        0 0 5px rgba(74, 110, 169, 0.8),
-        0 0 10px rgba(74, 110, 169, 0.6),
-        0 0 20px rgba(74, 110, 169, 0.4);
-    letter-spacing: 2px;
+  font-size: 2.2em;
+  font-weight: bold;
+  text-align: center;
+  margin: 0 0 20px 0;
+  color: #fff;
+  text-shadow: 0 0 5px rgba(74, 110, 169, 0.8),
+               0 0 10px rgba(74, 110, 169, 0.6),
+               0 0 20px rgba(74, 110, 169, 0.4);
+  letter-spacing: 2px;
 }
 
-/* --- Control Layout --- */
+/* Controls */
 .controls {
   display: flex;
-  flex-direction: column; 
-  gap: 0; 
+  flex-direction: column;
+  gap: 0;
   margin-bottom: 12px;
-  max-width: 600px; 
+  max-width: 600px;
 }
 
 .control-row {
-    display: flex;
-    flex-wrap: wrap; 
-    gap: 8px; 
-    margin-bottom: 8px; 
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 8px;
 }
 
-/* Border Separation for the first two rows */
 .folder-create-row,
 .folder-select-row {
-    padding-bottom: 12px; 
-    margin-bottom: 12px; 
-    border-bottom: 1px solid #484848; 
+  padding-bottom: 12px;
+  margin-bottom: 12px;
+  border-bottom: 1px solid #484848;
 }
 
-/* Force Link Save Row to never wrap, ensuring input and buttons stay together */
 .link-save-row {
-    flex-wrap: nowrap; 
-    align-items: center;
-    margin-bottom: 0; 
+  flex-wrap: nowrap;
+  align-items: center;
+  margin-bottom: 0;
 }
 
-
-/* --- Label Style --- */
 .selector-label {
-    flex: 0 0 auto;
-    display: flex;
-    align-items: center;
-    padding-left: 5px;
-    font-weight: bold;
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  padding-left: 5px;
+  font-weight: bold;
 }
 
-/* --- Input and Select Styles --- */
 input,
 select {
   padding: 8px;
   border: 1px solid #4a6ea9;
   border-radius: 5px;
-  flex: 1 1 180px; 
+  flex: 1 1 180px;
   min-width: 120px;
   background: #3a3a3a;
   color: #eaeaea;
-  transition: all 0.3s ease; 
-}
-
-/* Selector Hover Effect */
-#folder-select:hover {
-    cursor: pointer; 
-    box-shadow: 
-        0 0 5px rgba(74, 110, 169, 0.8); 
-}
-
-/* Selector width adjustment to fit the label */
-.folder-select-row select {
-    flex: 1 1 100px; 
-}
-
-#folder-select {
-    text-align: center;
-    text-align-last: center; 
-}
-
-#folder-input-el {
-    flex: 1 1 180px;
-}
-
-/* Link Input: high shrink factor to keep buttons on the same line */
-#input-el {
-    flex: 1 5 180px; 
-    min-width: 50px; 
+  transition: all 0.3s ease;
 }
 
 input::placeholder {
   color: #aaa;
 }
 
+/* 🌟 Stylish Buttons */
 button {
-  background: #4a6ea9;
-  color: #fff;
   border: none;
-  border-radius: 5px;
-  padding: 8px 15px;
+  border-radius: 8px;
+  padding: 9px 16px;
+  font-weight: 600;
   cursor: pointer;
-  font-weight: bold;
-  flex: 0 0 auto; 
-  transition: background 0.2s ease, transform 0.1s ease;
+  color: #fff;
+  letter-spacing: 0.5px;
+  transition: all 0.2s ease;
+  background: linear-gradient(145deg, #4a6ea9, #688ad1);
+  box-shadow:
+    0 0 6px rgba(74, 110, 169, 0.4),
+    inset 0 0 6px rgba(74, 110, 169, 0.3);
 }
 
 button:hover {
-  background: #688ad1;
-  transform: scale(1.05);
+  transform: translateY(-2px);
+  box-shadow:
+    0 0 12px rgba(74, 110, 169, 0.8),
+    inset 0 0 6px rgba(74, 110, 169, 0.3);
 }
 
-/* --- Folder Styles --- */
+/* 🔴 Delete Buttons */
+.delete-item-btn,
+.delete-folder-btn {
+  background: linear-gradient(145deg, #b33b3b, #d14e4e);
+  box-shadow:
+    0 0 6px rgba(209,78,78,0.5),
+    inset 0 0 6px rgba(179,59,59,0.3);
+}
+
+.delete-item-btn:hover,
+.delete-folder-btn:hover {
+  transform: translateY(-2px);
+  box-shadow:
+    0 0 12px rgba(209,78,78,0.8),
+    inset 0 0 6px rgba(179,59,59,0.3);
+}
+
+/* 🌐 Sync Button */
+#sync-btn {
+  background: linear-gradient(145deg, #468d6c, #5cbf90);
+  box-shadow:
+    0 0 6px rgba(92,191,144,0.5),
+    inset 0 0 6px rgba(70,141,108,0.3);
+}
+
+#sync-btn:hover {
+  transform: translateY(-2px);
+  box-shadow:
+    0 0 12px rgba(92,191,144,0.8),
+    inset 0 0 6px rgba(70,141,108,0.3);
+}
+
+/* Folder + Link Styles (unchanged for brevity) */
 .folder {
   background: #3a3a3a;
   border-radius: 10px;
@@ -139,16 +140,14 @@ button:hover {
   margin-bottom: 12px;
   transition: all 0.3s ease;
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
-  max-width: 600px; 
-  transition: all 0.3s ease, box-shadow 0.4s ease-in-out;
+  max-width: 600px;
 }
 
-/* Subtle Blue Glow Effect for Selected Folder */
 .folder.neon-selected {
-    box-shadow: 
-        0 0 8px rgba(74, 110, 169, 0.8), 
-        0 0 15px rgba(74, 110, 169, 0.5); 
-    border: 1px solid #4a6ea9; 
+  box-shadow:
+    0 0 8px rgba(74, 110, 169, 0.8),
+    0 0 15px rgba(74, 110, 169, 0.5);
+  border: 1px solid #4a6ea9;
 }
 
 .folder-title {
@@ -156,34 +155,15 @@ button:hover {
   justify-content: space-between;
   align-items: center;
   user-select: none;
-  cursor: pointer; 
-  padding: 4px 0; 
-  margin-top: 0; 
-  margin-bottom: 0;
+  cursor: pointer;
+  padding: 4px 0;
+  margin: 0;
 }
 
-.folder-label {
-    cursor: text; 
-    padding: 2px 4px; 
-    border-radius: 4px;
-    flex-grow: 1; 
-}
-
-/* Hide box when editing folder name */
 .folder-label[contenteditable="true"]:focus {
   outline: none;
-  box-shadow: none; 
-  background-color: transparent;
-  border-bottom: 2px solid #4a6ea9; 
-  padding-bottom: 0px; 
-}
-
-.folder-title:hover {
-  color: #9ab8ff;
-}
-
-.folder-title button {
-    color: #fff; 
+  border-bottom: 2px solid #4a6ea9;
+  padding-bottom: 0px;
 }
 
 .folder-list {
@@ -199,10 +179,9 @@ button:hover {
 .folder-list.collapsed {
   max-height: 0;
   opacity: 0;
-  pointer-events: none; 
+  pointer-events: none;
 }
 
-/* --- Lead Item Styles --- */
 .lead-item {
   margin: 6px 0;
   display: flex;
@@ -213,53 +192,34 @@ button:hover {
   border-radius: 6px;
 }
 
-/* 🌟 FIX: Truncation for the editable link name */
 .lead-name {
-    flex-shrink: 0; 
-    font-weight: bold;
-    cursor: text;
-    padding: 2px 4px; 
-    border-radius: 4px;
-    min-width: 50px; 
-    
-    /* Truncation properties */
-    display: inline-block; 
-    white-space: nowrap; 
-    overflow: hidden;
-    text-overflow: ellipsis;
-    max-width: 60%; /* Allow name to take up space */
+  font-weight: bold;
+  cursor: text;
+  padding: 2px 4px;
+  border-radius: 4px;
+  min-width: 50px;
+  display: inline-block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 60%;
 }
 
 .lead-name[contenteditable="true"]:focus {
-    outline: none;
-    box-shadow: 0 0 0 2px #4a6ea9;
-    background-color: #383838;
+  outline: none;
+  box-shadow: 0 0 0 2px #4a6ea9;
+  background-color: #383838;
 }
 
 a {
   color: #9ab8ff;
   text-decoration: none;
-  flex-grow: 1; 
+  flex-grow: 1;
   flex-shrink: 1;
   word-break: break-all;
-  font-size: 0.85em; 
+  font-size: 0.85em;
 }
 
 a:hover {
   text-decoration: underline;
-}
-
-/* --- Button Colors --- */
-.delete-folder-btn {
-  flex-shrink: 0;
-}
-
-.delete-item-btn,
-.delete-folder-btn {
-  background: #b33b3b;
-}
-
-.delete-item-btn:hover,
-.delete-folder-btn:hover {
-  background: #d14e4e;
 }
