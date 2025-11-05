@@ -1,0 +1,14 @@
+
+{
+  "manifest_version": 3,
+  "name": "Link Saver with Folders",
+  "version": "1.0",
+  "action": {
+    "default_popup": "index.html",
+    "default_icon": "icon.png" 
+  },
+  "permissions": [
+    "tabs",
+    "storage"
+  ]
+}
