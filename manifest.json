@@ -1,13 +1,23 @@
 {
   "manifest_version": 3,
-  "name": "Link Saver with Folders",
-  "version": "1.0",
-  "action": {
-    "default_popup": "index.html",
-    "default_icon": "icon.png" 
-  },
+  "name": "Link Saver",
+  "version": "1.0.0",
+  "description": "A powerful link manager with folder organization",
   "permissions": [
     "tabs",
+    "activeTab",
     "storage"
-  ]
+  ],
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "Link Saver"
+  },
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'"
+  },
+  "icons": {
+    "16": "assets/icons/icon-16.png",
+    "48": "assets/icons/icon-48.png",
+    "128": "assets/icons/icon-128.png"
+  }
 }
