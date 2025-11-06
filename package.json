@@ -1,6 +1,6 @@
 {
-  "name": "Scrim-s01uaas",
-  "description": "https://scrimba.com/learn-javascript-c0v/~056",
+  "name": "link-saver",
+  "description": "Browser extension to save links into categorized folders with naming and reordering features.",
   "scripts": {
     "start": "vite",
     "dev": "vite",

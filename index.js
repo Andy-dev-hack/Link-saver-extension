@@ -84,7 +84,40 @@ if (leadsFromLocalStorage) {
 }
 
 // ----------------------
-// Event Listeners
+// Core Link/Tab Saving Function (Refactored)
+// ----------------------
+
+function saveLink(link, defaultTitle) {
+    const folderName = folderSelect.value;
+    if (!link || !folderName || folderName === "") return; 
+
+    // Use defaultTitle (for tabs) or link (for manual input) for the prompt
+    const defaultName = truncateName(defaultTitle || link, 70); 
+
+    // Prompt user to edit the name
+    let newName = window.prompt(`Saving to "${folderName}". Set a name for the link:`, defaultName);
+    
+    if (newName === null || newName.trim() === "") {
+        if (newName === null) {
+            console.log("Link saving cancelled by user.");
+        } else {
+            alert("The link name cannot be empty. Saving cancelled.");
+        }
+        return; 
+    }
+    
+    // Save directly after prompt
+    const finalLinkName = truncateName(newName);
+    
+    if (!myLeadsByFolder[folderName]) myLeadsByFolder[folderName] = [];
+    myLeadsByFolder[folderName].push({ url: link, name: finalLinkName });
+    
+    reorderFolders(folderName);
+    saveAndRender();
+}
+
+// ----------------------
+// Event Listeners (Updated)
 // ----------------------
 
 folderSelect.addEventListener('change', (e) => {
@@ -104,6 +137,19 @@ folderInputEl.addEventListener("keydown", (e) => {
     }
 });
 
+// ⭐ NEW FEATURE: Enter key on link input field
+inputEl.addEventListener("keydown", (e) => {
+    if (e.key === "Enter") {
+        e.preventDefault(); 
+        const link = inputEl.value.trim();
+        if (link) {
+            saveLink(link); 
+            inputEl.value = ""; // Clear input after saving
+        }
+    }
+});
+
+
 function addFolder() {
   const folderName = folderInputEl.value.trim();
   if (!folderName) return;
@@ -121,67 +167,23 @@ function addFolder() {
   }
 }
 
-// 🌟 CHANGE: Reverted to ONLY NAME PROMPT (no window.confirm)
+// 🌟 UPDATED: Uses saveLink()
 inputBtn.addEventListener("click", () => {
   const link = inputEl.value.trim();
-  const folderName = folderSelect.value;
-  if (!link || !folderName || folderName === "") return; 
-
-  const defaultName = truncateName(link, 70);
-
-  // Prompt user to edit the name
-  let newName = window.prompt(`Saving to "${folderName}". Set a name for the link:`, defaultName);
-  
-  if (newName === null || newName.trim() === "") {
-    if (newName === null) {
-        console.log("Link saving cancelled by user.");
-    } else {
-        alert("The link name cannot be empty. Saving cancelled.");
-    }
-    return; 
+  if (link) {
+    saveLink(link);
+    inputEl.value = "";
   }
-  
-  // Save directly after prompt
-  const finalLinkName = truncateName(newName);
-  
-  if (!myLeadsByFolder[folderName]) myLeadsByFolder[folderName] = [];
-  myLeadsByFolder[folderName].push({ url: link, name: finalLinkName });
-  inputEl.value = "";
-  reorderFolders(folderName);
-  saveAndRender();
 });
 
-// 🌟 CHANGE: Reverted to ONLY NAME PROMPT (no window.confirm)
+// 🌟 UPDATED: Uses saveLink()
 tabBtn.addEventListener("click", () => {
   if (typeof chrome !== 'undefined' && chrome.tabs) {
     chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
       const link = tabs[0].url;
       const rawTitle = tabs[0].title || link; 
       
-      const folderName = folderSelect.value;
-      if (!folderName || folderName === "") return; 
-
-      const defaultName = truncateName(rawTitle, 70);
-
-      // Prompt user to edit the name
-      let newName = window.prompt(`Saving to "${folderName}". Set a name for the tab:`, defaultName);
-
-      if (newName === null || newName.trim() === "") {
-        if (newName === null) {
-            console.log("Tab saving cancelled by user.");
-        } else {
-            alert("The tab name cannot be empty. Saving cancelled.");
-        }
-        return; 
-      }
-      
-      // Save directly after prompt
-      const finalLinkName = truncateName(newName);
-      
-      if (!myLeadsByFolder[folderName]) myLeadsByFolder[folderName] = [];
-      myLeadsByFolder[folderName].push({ url: link, name: finalLinkName });
-      reorderFolders(folderName);
-      saveAndRender();
+      saveLink(link, rawTitle);
     });
   } else {
       alert("This functionality requires a browser extension environment (chrome.tabs).");

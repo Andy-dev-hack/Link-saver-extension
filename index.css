@@ -42,22 +42,34 @@ body {
     display: flex;
     flex-wrap: wrap; 
     gap: 8px; 
-    margin-bottom: 8px; 
+    /* margin-bottom is handled explicitly per row below */
+    margin-bottom: 0; 
 }
 
-/* Border Separation for the first two rows */
-.folder-create-row,
+/* ⭐ Row 1: Link/Tab Save Row (Border below it) */
+.link-save-row {
+    padding-bottom: 12px; 
+    margin-bottom: 12px; 
+    border-bottom: 1px solid #484848; 
+    flex-wrap: nowrap; 
+    align-items: center;
+}
+
+/* ⭐ Row 2: Folder Selection Row (Border below it + separation from line above) */
 .folder-select-row {
+    /* Separation from Row 1 border */
+    margin-top: 12px; 
+    /* Spacing and border below this row */
     padding-bottom: 12px; 
     margin-bottom: 12px; 
     border-bottom: 1px solid #484848; 
 }
 
-/* Force Link Save Row to never wrap, ensuring input and buttons stay together */
-.link-save-row {
-    flex-wrap: nowrap; 
-    align-items: center;
-    margin-bottom: 0; 
+/* ⭐ Row 3: Folder Creation Row (Separation from line above) */
+.folder-create-row {
+    /* Separation from Row 2 border */
+    margin-top: 12px;
+    margin-bottom: 8px; /* Standard margin for bottom-most row */
 }
 
 
@@ -249,9 +261,18 @@ a:hover {
   text-decoration: underline;
 }
 
-/* --- Button Colors --- */
+/* --- Button Colors and Hover Visibility --- */
+
+/* 1. Hide the delete folder button by default */
 .delete-folder-btn {
   flex-shrink: 0;
+  opacity: 0; 
+  transition: opacity 0.2s ease, background 0.2s ease, transform 0.1s ease;
+}
+
+/* 2. Show the delete folder button when the parent folder is hovered */
+.folder:hover .delete-folder-btn {
+  opacity: 1; 
 }
 
 .delete-item-btn,
