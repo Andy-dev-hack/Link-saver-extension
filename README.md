@@ -27,7 +27,7 @@ Pin the extension to your toolbar
 
 📁 Project Structure
 link-saver-extension/
-├── popup.html
+├── index.html
 ├── manifest.json
 ├── assets/
 │   ├── css/
