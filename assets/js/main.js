@@ -1,4 +1,4 @@
-import { ulEl, folderSelect, validateDOMElements } from './constants/dom-elements.js';
+import { ulEl, folderSelect,folderInputEl, inputEl, validateDOMElements } from './constants/dom-elements.js';
 import { loadFromStorage, saveToStorage } from './services/storage.js';
 import { renderFolders, updateFolderDropdown } from './ui/renderer.js';
 import { setupEventHandlers } from './ui/events.js';
