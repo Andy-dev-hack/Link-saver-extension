@@ -14,6 +14,9 @@ export default {
         "delete-red": "#b33b3b",
         "delete-red-hover": "#d14e4e",
         "neon-green": "#39ff14",
+        "dark-border": "#484848",
+        "dark-input": "#383838",
+        "text-placeholder": "#aaaaaa",
       },
       boxShadow: {
         "glow-ext":

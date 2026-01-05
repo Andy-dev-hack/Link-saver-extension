@@ -41,3 +41,7 @@ practice.js
 
 # AI Context
 ai/
+
+# Store Assets
+store-assets/
+*.zip

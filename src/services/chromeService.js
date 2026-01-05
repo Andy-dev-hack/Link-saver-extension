@@ -1,3 +1,9 @@
+/**
+ * Gets the currently active tab in the browser window.
+ *
+ * @param {function} callback - Callback function receiving (url, title).
+ * @returns {void}
+ */
 export const getActiveTab = (callback) => {
   if (typeof chrome !== "undefined" && chrome.tabs) {
     chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
@@ -12,6 +18,12 @@ export const getActiveTab = (callback) => {
   }
 };
 
+/**
+ * Gets all tabs from the current window.
+ *
+ * @param {function} callback - Callback function receiving an array of tab objects.
+ * @returns {void}
+ */
 export const getAllTabs = (callback) => {
   if (typeof chrome !== "undefined" && chrome.tabs) {
     chrome.tabs.query({ currentWindow: true }, (tabs) => {

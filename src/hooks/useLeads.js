@@ -1,137 +1,45 @@
-import { useState, useEffect } from "react";
-import {
-  STORAGE_KEY,
-  migrateData,
-  truncateName,
-  TRUNCATE_LENGTH_LONG,
-} from "../utils/helpers";
+import { useState, useEffect } from 'react';
+import { truncateName, TRUNCATE_LENGTH_LONG } from '@/utils';
+import { loadLeadsFromStorage, saveLeadsToStorage } from '@/services';
 
+/**
+ * Custom hook for managing leads data, folder selection, and persistence.
+ * Handles data loading from storage (with migration), syncing state, and all CRUD operations.
+ *
+ * @returns {Object} An object containing:
+ * - leadsData: The main data object { [folderName]: [leads] }
+ * - selectedFolder: The currently selected folder name
+ * - setSelectedFolder: Function to select a folder
+ * - addFolder, deleteFolder, renameFolder: Folder operations
+ * - saveLink, deleteLead, editLead, reorderLeads, moveLead: Lead operations
+ * - importTabs: Function to bulk import tabs
+ */
 export default function useLeads() {
   const [leadsData, setLeadsData] = useState({});
-  const [selectedFolder, setSelectedFolder] = useState("");
+  const [selectedFolder, setSelectedFolder] = useState('');
   const [isLoaded, setIsLoaded] = useState(false);
 
   // Load from storage on mount
   useEffect(() => {
-    // Defines storage key locally if not imported, but it is imported.
+    const initData = async () => {
+      const data = await loadLeadsFromStorage();
+      setLeadsData(data);
 
-    const loadData = () => {
-      // Check if chrome.storage is available
-      if (
-        typeof chrome !== "undefined" &&
-        chrome.storage &&
-        chrome.storage.local
-      ) {
-        chrome.storage.local.get([STORAGE_KEY], (result) => {
-          if (chrome.runtime.lastError) {
-            console.error("Storage error:", chrome.runtime.lastError);
-            setIsLoaded(true); // Allow app to function even if storage fails?
-            return;
-          }
-
-          const stored = result[STORAGE_KEY];
-
-          if (stored) {
-            // Data exists in chrome.storage.local
-            // stored is already an object, no need to JSON.parse usually if saved with set({key: object})
-            // But let's check if it was stringified. chrome.storage produces object if you pass object.
-            // If we save using JSON.stringify, we parse. If we save object, we get object.
-            // Let's assume we will save stringified to be consistent with localStorage logic or save object directly?
-            // Best practice for chrome.storage is saving objects directly.
-            // However, to reuse migrateData which expects object (parsed), we should see.
-
-            let parsed = stored;
-            // If for some reason it's a string (legacy compatibility or someone stringified it)
-            if (typeof stored === "string") {
-              try {
-                parsed = JSON.parse(stored);
-              } catch (e) {
-                console.error("Error parsing stored data", e);
-              }
-            }
-
-            const migrated = migrateData(parsed);
-            setLeadsData(migrated);
-
-            const folders = Object.keys(migrated);
-            if (folders.length > 0) {
-              setSelectedFolder(folders[0]);
-            }
-            setIsLoaded(true);
-          } else {
-            // No data in chrome.storage.local. CHECK LOCALSTORAGE (Migration)
-            const localStored = localStorage.getItem(STORAGE_KEY);
-            if (localStored) {
-              console.log(
-                "Migrating data from localStorage to chrome.storage.local..."
-              );
-              try {
-                const parsed = JSON.parse(localStored);
-                const migrated = migrateData(parsed);
-                setLeadsData(migrated);
-
-                // Save to chrome.storage.local immediately
-                // We save the object directly
-                chrome.storage.local.set({ [STORAGE_KEY]: migrated });
-
-                // Optional: Clear localStorage?
-                // localStorage.removeItem(STORAGE_KEY);
-
-                const folders = Object.keys(migrated);
-                if (folders.length > 0) {
-                  setSelectedFolder(folders[0]);
-                }
-              } catch (e) {
-                console.error("Migration failed:", e);
-              }
-            } else {
-              // No data anywhere
-              // Initialize empty?
-            }
-            setIsLoaded(true);
-          }
-        });
-      } else {
-        // Fallback for development (npm run dev) without extension context
-        console.warn(
-          "Chrome Storage API not available, falling back to localStorage"
-        );
-        const stored = localStorage.getItem(STORAGE_KEY);
-        if (stored) {
-          try {
-            const parsed = JSON.parse(stored);
-            const migrated = migrateData(parsed);
-            setLeadsData(migrated);
-            const folders = Object.keys(migrated);
-            if (folders.length > 0) {
-              setSelectedFolder(folders[0]);
-            }
-          } catch (e) {
-            console.error(e);
-          }
-        }
-        setIsLoaded(true);
+      const folders = Object.keys(data);
+      if (folders.length > 0) {
+        setSelectedFolder(folders[0]);
       }
+      setIsLoaded(true);
     };
 
-    loadData();
+    initData();
   }, []);
 
   // Save to storage whenever data changes
   useEffect(() => {
     // Only save if loaded (to avoid overwriting with empty state on init)
     if (isLoaded) {
-      if (
-        typeof chrome !== "undefined" &&
-        chrome.storage &&
-        chrome.storage.local
-      ) {
-        // We save object directly not stringified, it's cleaner in chrome storage
-        chrome.storage.local.set({ [STORAGE_KEY]: leadsData });
-      } else {
-        // Fallback
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(leadsData));
-      }
+      saveLeadsToStorage(leadsData);
     }
   }, [leadsData, isLoaded]);
 
@@ -159,7 +67,7 @@ export default function useLeads() {
 
       if (selectedFolder === folderName) {
         const remaining = Object.keys(newData);
-        setSelectedFolder(remaining.length > 0 ? remaining[0] : "");
+        setSelectedFolder(remaining.length > 0 ? remaining[0] : '');
       }
     }
   };
@@ -193,22 +101,18 @@ export default function useLeads() {
 
   const saveLink = (link, defaultTitle = null) => {
     if (!selectedFolder) {
-      alert("Please select a destination folder first.");
+      alert('Please select a destination folder first.');
       return;
     }
 
-    const defaultName = truncateName(
-      defaultTitle || link,
-      TRUNCATE_LENGTH_LONG
-    );
+    const defaultName = truncateName(defaultTitle || link, TRUNCATE_LENGTH_LONG);
     let newName = window.prompt(
       `Saving to "${selectedFolder}". Set a name for the link:`,
       defaultName
     );
 
-    if (newName === null || newName.trim() === "") {
-      if (newName !== null)
-        alert("The link name cannot be empty. Saving cancelled.");
+    if (newName === null || newName.trim() === '') {
+      if (newName !== null) alert('The link name cannot be empty. Saving cancelled.');
       return;
     }
 
@@ -232,7 +136,7 @@ export default function useLeads() {
   };
 
   const deleteLead = (folderName, index) => {
-    if (confirm("Delete this lead?")) {
+    if (confirm('Delete this lead?')) {
       const newData = { ...leadsData };
       const newLeads = [...newData[folderName]];
       newLeads.splice(index, 1);
@@ -242,7 +146,7 @@ export default function useLeads() {
         delete newData[folderName];
         if (selectedFolder === folderName) {
           const remaining = Object.keys(newData);
-          setSelectedFolder(remaining.length > 0 ? remaining[0] : "");
+          setSelectedFolder(remaining.length > 0 ? remaining[0] : '');
         }
       }
 

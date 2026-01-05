@@ -1,45 +1,52 @@
-# 🔗 Link Saver - Chrome Extension (React Version)
+# 🔗 Link Saver - Chrome Extension
 
-A powerful Chrome extension for saving and organizing links with folder management, now built with **React** and **Vite**.
+A powerful Chrome extension for saving and organizing links with folder management, built with **React 19**, **Vite**, and **Tailwind CSS**.
 
 ## ✨ Features
 
 - **Save Links & Tabs** with custom names
-- **Folder Organization** with visual selection
-- **Dark Theme** with neon effects
+- **Folder Organization** with visual selection and drag-and-drop
+- **Dark Theme** with neon effects and modern UI
 - **Edit & Delete** links and folders
+- **Persistent Storage** using `chrome.storage.local`
 - **React-based** for better performance and maintainability
 
 ## 🚀 Quick Installation
 
-1.  **Build the Project**:
-    You must build the project first to generate the extension files.
+### Option 1: Install from Chrome Web Store (Coming Soon)
 
-    ```bash
-    npm install
-    npm run build
-    ```
+Once published, you'll be able to install directly from the Chrome Web Store.
 
-    This creates a `dist` folder.
+### Option 2: Install Locally (Developer Mode)
 
-2.  **Open Chrome Extensions**:
+1. **Build the Project**:
+   You must build the project first to generate the extension files.
 
-    - Go to `chrome://extensions/`
-    - Enable **Developer mode** (top-right toggle)
+   ```bash
+   npm install
+   npm run build
+   ```
 
-3.  **Load Extension**:
-    - Click **Load unpacked**
-    - Select the `dist` folder inside your project directory
+   This creates a `dist` folder.
+
+2. **Open Chrome Extensions**:
+   - Go to `chrome://extensions/`
+   - Enable **Developer mode** (top-right toggle)
+
+3. **Load Extension**:
+   - Click **Load unpacked**
+   - Select the `dist` folder inside your project directory
 
 ## 📁 Project Structure
 
-```
+```text
 link-saver-extension/
 ├── src/
 │   ├── components/      # React Components (Header, FolderList, etc.)
 │   ├── context/         # Context API (LeadsContext)
 │   ├── hooks/           # Custom Hooks (useLeads)
 │   ├── services/        # Chrome API & Storage logic
+│   ├── utils/           # Helper functions
 │   ├── App.jsx          # Main Application Component
 │   └── main.jsx         # Entry Point
 ├── public/              # Static assets (manifest.json, icons)
@@ -63,20 +70,26 @@ link-saver-extension/
 - **Select Folder**: Choose from dropdown to highlight and prioritize
 - **Rename Folder**: Click on folder name and edit directly
 - **Delete Folder**: Hover over folder and click "Delete Folder"
+- **Drag & Drop**: Reorder links within folders or move between folders
 
 ## 🛠️ Technical Details
 
 ### Built With
 
-- **React 18**
-- **Vite**
-- **Context API** for state management
-- **CSS Modules** & Modern CSS3
+- **React 19** - Modern UI library
+- **Vite** - Fast build tool
+- **Tailwind CSS** - Utility-first styling
+- **@dnd-kit** - Drag and drop functionality
+- **Lucide React** - Icon library
 
 ### Browser APIs Used
 
 - `chrome.tabs` - Access current tab information
-- `localStorage` - Data persistence
+- `chrome.storage.local` - Data persistence (survives extension updates)
+
+### Storage
+
+All data is stored **locally** on your device using `chrome.storage.local`. No data is sent to external servers.
 
 ## 🐛 Troubleshooting
 
@@ -89,3 +102,25 @@ link-saver-extension/
 
 - If you edit the code, you must run `npm run build` again.
 - For development, use `npm run build -- --watch` to auto-rebuild on changes.
+
+### Data lost after update?
+
+- This should not happen with the current version (uses `chrome.storage.local`).
+- If you're migrating from an older version, data will be automatically migrated on first load.
+
+## 📄 Privacy
+
+See [PRIVACY_POLICY.md](PRIVACY_POLICY.md) for details on data collection and permissions.
+
+## 🤝 Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request.
+
+## 📝 License
+
+This project is open source and available under the MIT License.
+
+## 🔗 Links
+
+- [GitHub Repository](https://github.com/Andy-dev-hack/Link-saver-extension)
+- [Report Issues](https://github.com/Andy-dev-hack/Link-saver-extension/issues)

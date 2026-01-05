@@ -3,11 +3,7 @@
   "name": "Link Saver",
   "version": "1.0.0",
   "description": "A powerful link manager with folder organization",
-  "permissions": [
-    "tabs",
-    "activeTab",
-    "storage"
-  ],
+  "permissions": ["tabs", "activeTab", "storage"],
   "action": {
     "default_popup": "index.html",
     "default_title": "Link Saver"
@@ -16,8 +12,10 @@
     "extension_pages": "script-src 'self'; object-src 'self'"
   },
   "icons": {
-    "16": "icon.png",
-    "48": "icon.png",
-    "128": "icon.png"
-  }
+    "16": "icon-16.png",
+    "48": "icon-48.png",
+    "128": "icon-128.png"
+  },
+  "author": "Andy Dev",
+  "homepage_url": "https://github.com/Andy-dev-hack/Link-saver-extension"
 }
