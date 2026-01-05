@@ -1,0 +1,9 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  @apply bg-dark-bg text-text-main font-sans p-4 min-w-[350px] min-h-[500px] rounded-[10px] shadow-glow-ext;
+}
+
+/* Custom scrollbar for webkit if needed, but default is usually fine for extensions */

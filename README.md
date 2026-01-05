@@ -1,133 +1,91 @@
-🔗 Link Saver - Chrome Extension
-A powerful Chrome extension for saving and organizing links with folder management and Chrome bookmark synchronization.
+# 🔗 Link Saver - Chrome Extension (React Version)
 
-✨ Features
-Save Links & Tabs with custom names
+A powerful Chrome extension for saving and organizing links with folder management, now built with **React** and **Vite**.
 
-Folder Organization with visual selection
+## ✨ Features
 
-Chrome Bookmark Sync - two-way synchronization
+- **Save Links & Tabs** with custom names
+- **Folder Organization** with visual selection
+- **Dark Theme** with neon effects
+- **Edit & Delete** links and folders
+- **React-based** for better performance and maintainability
 
-Dark Theme with neon effects
+## 🚀 Quick Installation
 
-Edit & Delete links and folders
+1.  **Build the Project**:
+    You must build the project first to generate the extension files.
 
-🚀 Quick Installation
-Create a new folder for the extension
+    ```bash
+    npm install
+    npm run build
+    ```
 
-Add all the files below to the folder
+    This creates a `dist` folder.
 
-Open Chrome → chrome://extensions/
+2.  **Open Chrome Extensions**:
 
-Enable Developer mode (top-right toggle)
+    - Go to `chrome://extensions/`
+    - Enable **Developer mode** (top-right toggle)
 
-Click "Load unpacked" and select your folder
+3.  **Load Extension**:
+    - Click **Load unpacked**
+    - Select the `dist` folder inside your project directory
 
-Pin the extension to your toolbar
+## 📁 Project Structure
 
-📁 Project Structure
+```
 link-saver-extension/
-├── index.html
-├── manifest.json
-├── assets/
-│   ├── css/
-│   │   └── index.css
-│   └── js/
-│       ├── main.js
-│       ├── constants/
-│       │   ├── dom-elements.js
-│       │   └── config.js
-│       ├── utils/
-│       │   └── helpers.js
-│       ├── services/
-│       │   ├── storage.js
-│       │   ├── folders.js
-│       │   ├── leads.js
-│       │   └── sync.js
-│       └── ui/
-│           ├── renderer.js
-│           └── events.js
-└── README.md
+├── src/
+│   ├── components/      # React Components (Header, FolderList, etc.)
+│   ├── context/         # Context API (LeadsContext)
+│   ├── hooks/           # Custom Hooks (useLeads)
+│   ├── services/        # Chrome API & Storage logic
+│   ├── App.jsx          # Main Application Component
+│   └── main.jsx         # Entry Point
+├── public/              # Static assets (manifest.json, icons)
+├── dist/                # Build output (Load this in Chrome)
+└── vite.config.js       # Vite Configuration
+```
 
-🎯 Usage Guide
-Saving Links
-Click the extension icon in your toolbar
+## 🎯 Usage Guide
 
-Enter a URL in the input field or use "Save Tab" for current page
+### Saving Links
 
-Select a destination folder from the dropdown
+- Click the extension icon in your toolbar
+- Enter a URL in the input field or use "Save Tab" for current page
+- Select a destination folder from the dropdown
+- Customize the link name when prompted
+- Click "Save Link" or press Enter
 
-Customize the link name when prompted
+### Managing Folders
 
-Click "Save Link" or press Enter
+- **Create New Folder**: Enter name and click "Create Folder"
+- **Select Folder**: Choose from dropdown to highlight and prioritize
+- **Rename Folder**: Click on folder name and edit directly
+- **Delete Folder**: Hover over folder and click "Delete Folder"
 
-Managing Folders
-Create New Folder: Enter name and click "Create Folder"
+## 🛠️ Technical Details
 
-Select Folder: Choose from dropdown to highlight and prioritize
+### Built With
 
-Rename Folder: Click on folder name and edit directly
+- **React 18**
+- **Vite**
+- **Context API** for state management
+- **CSS Modules** & Modern CSS3
 
-Delete Folder: Hover over folder and click "Delete Folder"
+### Browser APIs Used
 
-Synchronization
-Click "Sync with Chrome" to synchronize with Chrome bookmarks
+- `chrome.tabs` - Access current tab information
+- `localStorage` - Data persistence
 
-Data merges automatically with Chrome bookmarks taking priority
+## 🐛 Troubleshooting
 
-Creates "Link Saver Sync" folder in Chrome bookmarks
+### Extension won't load?
 
-View sync status in real-time feedback messages
+- Ensure you selected the `dist` folder, not the root folder.
+- Run `npm run build` again to make sure the build is fresh.
 
-🛠️ Technical Details
-Built With
-Vanilla JavaScript (ES6 Modules)
+### Changes not showing?
 
-Chrome Extensions API (Manifest V3)
-
-CSS3 with modern animations
-
-LocalStorage for data persistence
-
-Browser APIs Used
-chrome.tabs - Access current tab information
-
-chrome.bookmarks - Synchronization with Chrome bookmarks
-
-localStorage - Data persistence
-
-🐛 Troubleshooting
-Common Issues
-Extension won't load:
-
-Check manifest.json syntax
-
-Ensure popup.html exists in root directory
-
-Sync not working:
-
-Confirm "bookmarks" permission in manifest
-
-Check Chrome bookmark permissions
-
-Data not saving:
-
-Verify storage permission
-
-Check localStorage quota
-
-Debugging
-Open chrome://extensions/
-
-Find Link Saver and click "Details"
-
-Enable "Developer mode"
-
-Click "Inspect views" for console logs
-
-🔮 Roadmap
-Export/Import functionality
-
-Search & Filter across folders
-
-Tags System for better organization
+- If you edit the code, you must run `npm run build` again.
+- For development, use `npm run build -- --watch` to auto-rebuild on changes.

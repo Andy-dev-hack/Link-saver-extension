@@ -1,36 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="stylesheet" href="assets/css/index.css" />
-  <title>Link Saver</title>
-</head>
-<body>
-  
-<div id="extension-title">LINK SAVER v1</div>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <div class="controls">
-    
-    <div class="control-row link-save-row">
-      <input type="text" id="input-el" placeholder="Enter a link">
-      <button id="input-btn">Save Link</button>
-      <button id="tab-btn">Save Tab</button>
-    </div>
-
-    <div class="control-row folder-select-row">
-      <span class="selector-label">Destination folder:</span>
-      <select id="folder-select"></select>
-    </div>
-
-    <div class="control-row folder-create-row">
-      <input type="text" id="folder-input-el" placeholder="New folder name">
-      <button id="add-folder-btn">Create Folder</button>
-    </div>
-  </div>
-
-  <div id="ul-el"></div>
-
-  <script type="module" src="assets/js/main.js"></script>
-</body>
+    <title>Link Saver</title>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
 </html>
