@@ -1,4 +1,3 @@
-import React from 'react';
 import { RotateCw } from 'lucide-react';
 import { useLeadsContext } from '@/context/LeadsContext';
 import { getAllTabs } from '@/services';

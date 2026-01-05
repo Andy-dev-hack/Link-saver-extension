@@ -1,5 +1,4 @@
-import React from "react";
-import { useLeadsContext } from "@/context/LeadsContext";
+import { useLeadsContext } from '@/context/LeadsContext';
 
 export default function LeadList({ leads, folderName, isExpanded }) {
   const { deleteLead, editLead } = useLeadsContext();
@@ -7,9 +6,7 @@ export default function LeadList({ leads, folderName, isExpanded }) {
   return (
     <ul
       className={`list-none p-0 m-0 min-h-[10px] transition-all duration-300 ${
-        isExpanded
-          ? "opacity-100 max-h-[1000px]"
-          : "opacity-0 max-h-0 overflow-hidden"
+        isExpanded ? 'opacity-100 max-h-[1000px]' : 'opacity-0 max-h-0 overflow-hidden'
       }`}
     >
       {leads.map((lead, index) => (
@@ -29,7 +26,7 @@ export default function LeadList({ leads, folderName, isExpanded }) {
                   }
                 }}
                 onKeyDown={(e) => {
-                  if (e.key === "Enter") {
+                  if (e.key === 'Enter') {
                     e.preventDefault();
                     e.target.blur();
                   }

@@ -1,18 +1,18 @@
-import React, { useState } from "react";
-import { Header, InputSection, FolderControl, FolderList } from "@/components";
-import { useLeadsContext } from "@/context/LeadsContext";
-import { getActiveTab } from "@/services";
+import { useState } from 'react';
+import { Header, InputSection, FolderControl, FolderList } from '@/components';
+import { useLeadsContext } from '@/context/LeadsContext';
+import { getActiveTab } from '@/services';
 
 function App() {
   const { leadsData, selectedFolder, addFolder, saveLink } = useLeadsContext();
 
-  const [inputVal, setInputVal] = useState("");
-  const [newFolderVal, setNewFolderVal] = useState("");
+  const [inputVal, setInputVal] = useState('');
+  const [newFolderVal, setNewFolderVal] = useState('');
 
   const handleSaveLink = () => {
     if (inputVal) {
       saveLink(inputVal);
-      setInputVal("");
+      setInputVal('');
     }
   };
 
@@ -25,7 +25,7 @@ function App() {
   const handleCreateFolder = () => {
     if (newFolderVal) {
       addFolder(newFolderVal);
-      setNewFolderVal("");
+      setNewFolderVal('');
     }
   };
 

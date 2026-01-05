@@ -1,5 +1,4 @@
-import React from "react";
-import { useLeadsContext } from "@/context/LeadsContext";
+import { useLeadsContext } from '@/context/LeadsContext';
 
 export default function FolderControl({
   folders,
@@ -13,9 +12,7 @@ export default function FolderControl({
   return (
     <>
       <div className="flex flex-wrap gap-2 mt-3 pb-3 mb-3 border-b border-dark-border">
-        <span className="flex-none flex items-center pl-[5px] font-bold">
-          Destination folder:
-        </span>
+        <span className="flex-none flex items-center pl-[5px] font-bold">Destination folder:</span>
         <select
           className="p-2 border border-neon-blue rounded-[5px] flex-[1_1_100px] min-w-[120px] bg-dark-card text-text-main transition-all duration-300 text-center text-center-last hover:cursor-pointer hover:shadow-[0_0_5px_rgba(74,110,169,0.8)]"
           value={selectedFolder}

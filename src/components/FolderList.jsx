@@ -1,6 +1,5 @@
-import React from "react";
-import FolderItem from "./FolderItem";
-import { useLeadsContext } from "@/context/LeadsContext";
+import FolderItem from './FolderItem';
+import { useLeadsContext } from '@/context/LeadsContext';
 
 export default function FolderList() {
   const { leadsData, selectedFolder } = useLeadsContext();

@@ -1,11 +1,13 @@
-import React, { useState } from 'react';
+import { useState, useRef } from 'react';
+import { useSortable } from '@dnd-kit/sortable';
+import { CSS } from '@dnd-kit/utilities';
 import LeadList from './LeadList';
 import { useLeadsContext } from '@/context/LeadsContext';
 
 export default function FolderItem({ folderName, leads, isSelected }) {
   const { renameFolder, deleteFolder } = useLeadsContext();
   const [isExpanded, setIsExpanded] = useState(false);
-  const timeoutRef = React.useRef(null);
+  const timeoutRef = useRef(null);
 
   const handleMouseEnter = () => {
     if (timeoutRef.current) clearTimeout(timeoutRef.current);
