@@ -1,6 +1,6 @@
 import { useLeadsContext } from '@/context/LeadsContext';
 
-export default function LeadList({ leads, folderName, isExpanded }) {
+export default function LeadList({ leads, folderId, isExpanded }) {
   const { deleteLead, editLead } = useLeadsContext();
 
   return (
@@ -20,7 +20,7 @@ export default function LeadList({ leads, folderName, isExpanded }) {
                 onBlur={(e) => {
                   const newName = e.target.textContent.trim();
                   if (newName && newName !== lead.name) {
-                    editLead(folderName, index, newName);
+                    editLead(folderId, index, newName);
                   } else {
                     e.target.textContent = lead.name;
                   }
@@ -47,7 +47,11 @@ export default function LeadList({ leads, folderName, isExpanded }) {
             <div className="flex gap-2 opacity-0 group-hover/item:opacity-100 transition-opacity duration-200">
               <button
                 className="bg-transparent border border-delete-red text-delete-red rounded-[3px] cursor-pointer text-xs px-2 py-1 hover:bg-delete-red hover:text-white"
-                onClick={() => deleteLead(folderName, index)}
+                onClick={() => {
+                  if (window.confirm('Delete this lead?')) {
+                    deleteLead(folderId, index);
+                  }
+                }}
               >
                 Delete
               </button>

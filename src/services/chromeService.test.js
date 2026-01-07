@@ -79,7 +79,7 @@ describe('chromeService.js', () => {
       getActiveTab(callback);
 
       expect(consoleWarnSpy).toHaveBeenCalledWith('Chrome API not available (getActiveTab)');
-      expect(callback).not.toHaveBeenCalled();
+      expect(callback).toHaveBeenCalledWith('https://example.com/mock-tab', 'Mock Tab Title');
 
       consoleWarnSpy.mockRestore();
     });

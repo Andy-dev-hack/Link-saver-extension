@@ -1,8 +1,8 @@
 import { useLeadsContext } from '@/context/LeadsContext';
 
 export default function FolderControl({
-  folders,
-  selectedFolder,
+  folders, // Array<{id, name, items}>
+  selectedFolderId,
   newFolderVal,
   setNewFolderVal,
   onCreateFolder,
@@ -15,12 +15,12 @@ export default function FolderControl({
         <span className="flex-none flex items-center pl-[5px] font-bold">Destination folder:</span>
         <select
           className="p-2 border border-neon-blue rounded-[5px] flex-[1_1_100px] min-w-[120px] bg-dark-card text-text-main transition-all duration-300 text-center text-center-last hover:cursor-pointer hover:shadow-[0_0_5px_rgba(74,110,169,0.8)]"
-          value={selectedFolder}
+          value={selectedFolderId}
           onChange={(e) => setSelectedFolder(e.target.value)}
         >
           {folders.map((folder) => (
-            <option key={folder} value={folder}>
-              {folder}
+            <option key={folder.id} value={folder.id}>
+              {folder.name}
             </option>
           ))}
         </select>

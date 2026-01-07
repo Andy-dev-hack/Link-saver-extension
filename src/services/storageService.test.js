@@ -1,6 +1,6 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
-import { loadLeadsFromStorage, saveLeadsToStorage } from './storageService';
-import { STORAGE_KEY } from '@/utils/helpers';
+import { loadLeadsFromStorage, saveLeadsToStorage, backupV1Data } from './storageService';
+import { STORAGE_KEY_V1 as STORAGE_KEY, STORAGE_KEY_BACKUP_V1 } from '@/constants';
 
 describe('storageService', () => {
   beforeEach(() => {

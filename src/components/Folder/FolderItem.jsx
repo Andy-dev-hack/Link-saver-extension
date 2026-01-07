@@ -1,10 +1,10 @@
 import { useState, useRef } from 'react';
 import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
-import LeadList from './LeadList';
+import { LeadList } from '@/components/Lead';
 import { useLeadsContext } from '@/context/LeadsContext';
 
-export default function FolderItem({ folderName, leads, isSelected }) {
+export default function FolderItem({ folder, isSelected }) {
   const { renameFolder, deleteFolder } = useLeadsContext();
   const [isExpanded, setIsExpanded] = useState(false);
   const timeoutRef = useRef(null);
@@ -27,10 +27,10 @@ export default function FolderItem({ folderName, leads, isSelected }) {
     const newNameWithCount = e.target.textContent.trim();
     const newName = newNameWithCount.replace(/\s*\(\d+\)$/, '').trim();
 
-    if (newName && newName !== folderName) {
-      renameFolder(folderName, newName);
+    if (newName && newName !== folder.name) {
+      renameFolder(folder.id, newName);
     } else {
-      e.target.textContent = `${folderName} (${leads.length})`;
+      e.target.textContent = `${folder.name} (${folder.items.length})`;
     }
   };
 
@@ -46,7 +46,7 @@ export default function FolderItem({ folderName, leads, isSelected }) {
       className={`bg-dark-card rounded-[10px] p-[10px] mb-3 transition-all duration-300 shadow-card border border-transparent max-w-[600px] group ${
         isSelected ? 'shadow-glow-selected border-neon-blue' : ''
       }`}
-      id={`folder-div-${folderName}`}
+      id={`folder-div-${folder.id}`}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
     >
@@ -58,20 +58,22 @@ export default function FolderItem({ folderName, leads, isSelected }) {
           onBlur={handleBlur}
           onKeyDown={handleKeyDown}
         >
-          {folderName} ({leads.length})
+          {folder.name} ({folder.items.length})
         </span>
         <button
           className="bg-delete-red text-white border-none rounded-[5px] px-[15px] py-2 cursor-pointer font-bold flex-none transition-all duration-200 hover:bg-delete-red-hover hover:scale-105 opacity-0 group-hover:opacity-100"
           onClick={(e) => {
             e.stopPropagation();
-            deleteFolder(folderName);
+            if (window.confirm(`Delete folder "${folder.name}" and all its links?`)) {
+              deleteFolder(folder.id);
+            }
           }}
         >
           Delete Folder
         </button>
       </h3>
 
-      <LeadList leads={leads} folderName={folderName} isExpanded={isExpanded} />
+      <LeadList leads={folder.items} folderId={folder.id} isExpanded={isExpanded} />
     </div>
   );
 }

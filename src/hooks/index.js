@@ -1,1 +1,1 @@
-export { default as useLeads } from './useLeads';
+export { default as useLeadsV2 } from './useLeadsV2';

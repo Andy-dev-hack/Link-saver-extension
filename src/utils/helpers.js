@@ -1,6 +1,4 @@
-export const TRUNCATE_LENGTH = 45;
-export const TRUNCATE_LENGTH_LONG = 70;
-export const STORAGE_KEY = "myLeadsByFolder";
+import { TRUNCATE_LENGTH, STORAGE_KEY_V1 as STORAGE_KEY } from '@/constants';
 
 /**
  * Truncates a string to a max length, appending '...'.
@@ -10,9 +8,9 @@ export const STORAGE_KEY = "myLeadsByFolder";
  * @returns {string} The truncated string.
  */
 export const truncateName = (name, maxLength = TRUNCATE_LENGTH) => {
-  if (!name) return "";
+  if (!name) return '';
   if (name.length > maxLength) {
-    return name.substring(0, maxLength) + "...";
+    return name.substring(0, maxLength) + '...';
   }
   return name;
 };
@@ -28,7 +26,7 @@ export const migrateData = (data) => {
   // If data is array (old format), convert to object
   if (Array.isArray(data)) {
     return {
-      "My Leads": data.map((lead) => ({
+      'My Leads': data.map((lead) => ({
         ...lead,
         id: lead.id || crypto.randomUUID(),
       })),
@@ -40,7 +38,7 @@ export const migrateData = (data) => {
   Object.keys(data).forEach((folder) => {
     migrated[folder] = data[folder].map((lead) => {
       // Handle string leads (legacy)
-      if (typeof lead === "string") {
+      if (typeof lead === 'string') {
         return {
           id: crypto.randomUUID(),
           url: lead,

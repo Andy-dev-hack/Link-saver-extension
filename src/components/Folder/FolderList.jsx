@@ -2,9 +2,9 @@ import FolderItem from './FolderItem';
 import { useLeadsContext } from '@/context/LeadsContext';
 
 export default function FolderList() {
-  const { leadsData, selectedFolder } = useLeadsContext();
+  const { leadsData, selectedFolderId } = useLeadsContext();
 
-  if (Object.keys(leadsData).length === 0) {
+  if (leadsData.length === 0) {
     return (
       <div className="text-center p-4 text-text-placeholder">
         No folders yet. Create your first folder above!
@@ -14,13 +14,8 @@ export default function FolderList() {
 
   return (
     <div id="ul-el">
-      {Object.keys(leadsData).map((folderName) => (
-        <FolderItem
-          key={folderName}
-          folderName={folderName}
-          leads={leadsData[folderName]}
-          isSelected={folderName === selectedFolder}
-        />
+      {leadsData.map((folder) => (
+        <FolderItem key={folder.id} folder={folder} isSelected={folder.id === selectedFolderId} />
       ))}
     </div>
   );

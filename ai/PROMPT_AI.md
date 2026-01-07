@@ -34,7 +34,9 @@
 - `src/components/`: Reusable React components (with `.test.jsx` files colocated).
 - `src/hooks/`: Custom hooks (with `.test.js` files colocated).
 - `src/services/`: External API logic (with `.test.js` files colocated).
-- `src/utils/`: Helpers and constants (with `.test.js` files colocated).
+- `src/constants/`: Global configuration and static strings (index.js).
+- `src/validators/`: Business logic and data validation rules (with tests).
+- `src/utils/`: Generic helpers only (date formatting, truncation).
 
 **Test Colocation**: Tests are placed **next to the code they test** (e.g., `helpers.js` and `helpers.test.js` in the same directory).
 
@@ -71,6 +73,15 @@
 ### 4.5 Chrome APIs
 
 - Always wrap Chrome API calls in checks (`typeof chrome !== "undefined"`) to allow development in local browser (fallback mode).
+
+### 4.6 Architecture Patterns (New)
+
+- **Centralized Configuration**:
+  - NEVER hardcode "magic numbers" or strings in components/hooks.
+  - Move all config to `src/constants/index.js`.
+- **Isolated Validation**:
+  - Complex validation logic (e.g., duplicate checks) GOES TO `src/validators/`.
+  - Hooks should consume validators, not implement them inline.
 
 ## 5. Documentation & Comments
 
@@ -132,15 +143,15 @@
 Use **Vitest** + **React Testing Library**:
 
 ```javascript
-import { describe, it, expect, beforeEach, vi } from "vitest";
-import { renderHook, act } from "@testing-library/react";
+import { describe, it, expect, beforeEach, vi } from 'vitest';
+import { renderHook, act } from '@testing-library/react';
 
-describe("Feature Name", () => {
+describe('Feature Name', () => {
   beforeEach(() => {
     // Setup
   });
 
-  it("should do something", () => {
+  it('should do something', () => {
     // Arrange
     // Act
     // Assert

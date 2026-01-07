@@ -5,7 +5,7 @@
  * @returns {void}
  */
 export const getActiveTab = (callback) => {
-  if (typeof chrome !== "undefined" && chrome.tabs) {
+  if (typeof chrome !== 'undefined' && chrome.tabs) {
     chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
       if (tabs && tabs[0]) {
         const link = tabs[0].url;
@@ -14,7 +14,9 @@ export const getActiveTab = (callback) => {
       }
     });
   } else {
-    console.warn("Chrome API not available (getActiveTab)");
+    console.warn('Chrome API not available (getActiveTab)');
+    // Mock data for development
+    callback('https://example.com/mock-tab', 'Mock Tab Title');
   }
 };
 
@@ -25,18 +27,18 @@ export const getActiveTab = (callback) => {
  * @returns {void}
  */
 export const getAllTabs = (callback) => {
-  if (typeof chrome !== "undefined" && chrome.tabs) {
+  if (typeof chrome !== 'undefined' && chrome.tabs) {
     chrome.tabs.query({ currentWindow: true }, (tabs) => {
       if (tabs) {
         callback(tabs);
       }
     });
   } else {
-    console.warn("Chrome API not available (getAllTabs)");
+    console.warn('Chrome API not available (getAllTabs)');
     // Mock data for development
     callback([
-      { url: "https://google.com", title: "Google" },
-      { url: "https://github.com", title: "GitHub" },
+      { url: 'https://google.com', title: 'Google' },
+      { url: 'https://github.com', title: 'GitHub' },
     ]);
   }
 };

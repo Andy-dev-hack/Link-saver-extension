@@ -1,5 +1,6 @@
-import { describe, it, expect, vi } from 'vitest';
-import { truncateName, migrateData, TRUNCATE_LENGTH, TRUNCATE_LENGTH_LONG } from '@/utils';
+import { describe, it, expect } from 'vitest';
+import { truncateName, migrateData } from './helpers';
+import { TRUNCATE_LENGTH, TRUNCATE_LENGTH_LONG, STORAGE_KEY_V1 as STORAGE_KEY } from '@/constants';
 
 describe('helpers.js', () => {
   describe('truncateName', () => {

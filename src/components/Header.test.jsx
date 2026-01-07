@@ -5,6 +5,6 @@ import { Header } from '@/components';
 describe('Header Component', () => {
   it('renders the title correctly', () => {
     render(<Header />);
-    expect(screen.getByText('LINK SAVER v1')).toBeInTheDocument();
+    expect(screen.getByText('LINK SAVER v2')).toBeInTheDocument();
   });
 });

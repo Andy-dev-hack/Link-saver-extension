@@ -1,5 +1,5 @@
 import { createContext, useContext } from 'react';
-import useLeads from '../hooks/useLeads';
+import useLeads from '../hooks/useLeadsV2';
 
 const LeadsContext = createContext();
 
