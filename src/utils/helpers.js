@@ -1,4 +1,4 @@
-import { TRUNCATE_LENGTH, STORAGE_KEY_V1 as STORAGE_KEY } from '@/constants';
+import { TRUNCATE_LENGTH, FAVICON_URL_PREFIX, FAVICON_SIZE_PARAM } from '@/constants';
 
 /**
  * Truncates a string to a max length, appending '...'.
@@ -53,4 +53,20 @@ export const migrateData = (data) => {
   });
 
   return migrated;
+};
+
+/**
+ * Generates a Google S2 Favicon URL for a given link.
+ *
+ * @param {string} url - The website URL.
+ * @returns {string} The favicon image URL.
+ */
+export const getFaviconUrl = (url) => {
+  if (!url) return '';
+  try {
+    const domain = new URL(url).hostname;
+    return `${FAVICON_URL_PREFIX}${domain}${FAVICON_SIZE_PARAM}`;
+  } catch (e) {
+    return ''; // Return empty string if invalid URL
+  }
 };

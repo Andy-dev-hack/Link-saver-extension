@@ -1,6 +1,7 @@
 import { useState, useRef } from 'react';
 import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
+import { Trash2 } from 'lucide-react';
 import { LeadList } from '@/components/Lead';
 import { useLeadsContext } from '@/context/LeadsContext';
 
@@ -61,15 +62,16 @@ export default function FolderItem({ folder, isSelected }) {
           {folder.name} ({folder.items.length})
         </span>
         <button
-          className="bg-delete-red text-white border-none rounded-[5px] px-[15px] py-2 cursor-pointer font-bold flex-none transition-all duration-200 hover:bg-delete-red-hover hover:scale-105 opacity-0 group-hover:opacity-100"
+          className="bg-transparent text-delete-red p-2 rounded hover:bg-dark-bg transition-colors opacity-0 group-hover:opacity-100"
           onClick={(e) => {
             e.stopPropagation();
             if (window.confirm(`Delete folder "${folder.name}" and all its links?`)) {
               deleteFolder(folder.id);
             }
           }}
+          title="Delete Folder"
         >
-          Delete Folder
+          <Trash2 size={18} />
         </button>
       </h3>
 

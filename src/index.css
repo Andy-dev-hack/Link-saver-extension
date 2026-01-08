@@ -7,3 +7,7 @@ body {
 }
 
 /* Custom scrollbar for webkit if needed, but default is usually fine for extensions */
+
+#root {
+  @apply h-full w-full;
+}

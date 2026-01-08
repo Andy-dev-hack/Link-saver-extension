@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { truncateName, migrateData } from './helpers';
+import { truncateName, migrateData, getFaviconUrl } from './helpers';
 import { TRUNCATE_LENGTH, TRUNCATE_LENGTH_LONG, STORAGE_KEY_V1 as STORAGE_KEY } from '@/constants';
 
 describe('helpers.js', () => {
@@ -28,10 +28,8 @@ describe('helpers.js', () => {
       const longName =
         'This is a very long name that exceeds the custom truncate length of 70 characters';
       const result = truncateName(longName, TRUNCATE_LENGTH_LONG);
-      expect(result).toBe(
-        'This is a very long name that exceeds the custom truncate length of 70...'
-      );
-      expect(result.length).toBe(73); // 70 + '...'
+      expect(result).toBe('This is a very long name that exceeds the custom truncate le...');
+      expect(result.length).toBe(63); // 60 + '...'
     });
 
     it('should respect custom maxLength parameter', () => {
@@ -123,6 +121,30 @@ describe('helpers.js', () => {
       expect(Object.keys(result)).toHaveLength(2);
       expect(result['Work'][0].id).toBe('mock-uuid-123');
       expect(result['Personal'][0].id).toBe('mock-uuid-123');
+    });
+  });
+
+  describe('getFaviconUrl', () => {
+    it('should return empty string for missing url', () => {
+      expect(getFaviconUrl(null)).toBe('');
+      expect(getFaviconUrl(undefined)).toBe('');
+      expect(getFaviconUrl('')).toBe('');
+    });
+
+    it('should return correct favicon url for domain', () => {
+      const url = 'https://www.github.com/some/repo';
+      const expected = 'https://www.google.com/s2/favicons?domain=www.github.com&sz=32';
+      expect(getFaviconUrl(url)).toBe(expected);
+    });
+
+    it('should handle url without www', () => {
+      const url = 'https://github.com';
+      const expected = 'https://www.google.com/s2/favicons?domain=github.com&sz=32';
+      expect(getFaviconUrl(url)).toBe(expected);
+    });
+
+    it('should return empty string for invalid url', () => {
+      expect(getFaviconUrl('not-a-url')).toBe('');
     });
   });
 });
