@@ -1,6 +1,5 @@
 import { useState, useRef } from 'react';
-import { useSortable } from '@dnd-kit/sortable';
-import { CSS } from '@dnd-kit/utilities';
+
 import { Trash2 } from 'lucide-react';
 import { LeadList } from '@/components/Lead';
 import { useLeadsContext } from '@/context/LeadsContext';

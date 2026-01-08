@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import { truncateName, migrateData, getFaviconUrl } from './helpers';
-import { TRUNCATE_LENGTH, TRUNCATE_LENGTH_LONG, STORAGE_KEY_V1 as STORAGE_KEY } from '@/constants';
+import { TRUNCATE_LENGTH_LONG } from '@/constants';
 
 describe('helpers.js', () => {
   describe('truncateName', () => {
