@@ -40,7 +40,8 @@ coverage
 practice.js
 
 # AI Context
-ai/
+# ai/
+# plans/
 
 # Store Assets
 store-assets/
