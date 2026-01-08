@@ -6,10 +6,10 @@ A powerful Chrome extension for saving and organizing links with folder manageme
 
 - **Save Links & Tabs** with custom names
 - **Folder Organization** with visual selection and drag-and-drop
+- **Rich Link Previews** with automatic **Favicons**
+- **Refined UI** with intuitive Edit/Delete icons
 - **Dark Theme** with neon effects and modern UI
-- **Edit & Delete** links and folders
-- **Persistent Storage** using `chrome.storage.local`
-- **React-based** for better performance and maintainability
+- **Persistent Storage** using `chrome.storage.local` with auto-backup
 
 ## 🚀 Quick Installation
 
@@ -36,6 +36,16 @@ Once published, you'll be able to install directly from the Chrome Web Store.
 3. **Load Extension**:
    - Click **Load unpacked**
    - Select the `dist` folder inside your project directory
+
+### Option 3: Local UI Development (Mock Mode)
+
+To work on the UI without reloading the extension constantly:
+
+```bash
+npm run dev
+```
+
+This runs the app in your browser using `localStorage` (Separate from extension data) to mock persistence. Perfect for styling and layout work.
 
 ## 📁 Project Structure
 
@@ -64,13 +74,19 @@ link-saver-extension/
 - Customize the link name when prompted
 - Click "Save Link" or press Enter
 
+### Managing Links
+
+- **Open Link**: Click the link name directly.
+- **Edit Link**: Click the **Pencil Icon** to rename inline.
+- **Delete Link**: Click the **Trash Icon**.
+
 ### Managing Folders
 
 - **Create New Folder**: Enter name and click "Create Folder"
 - **Select Folder**: Choose from dropdown to highlight and prioritize
-- **Rename Folder**: Click on folder name and edit directly
-- **Delete Folder**: Hover over folder and click "Delete Folder"
-- **Drag & Drop**: Reorder links within folders or move between folders
+- **Rename Folder**: Click on folder name to edit
+- **Delete Folder**: Hover over folder and click the **Trash Icon**
+- **Drag & Drop**: Reorder links within folders (Coming Soon)
 
 ## 🛠️ Technical Details
 
@@ -79,7 +95,6 @@ link-saver-extension/
 - **React 19** - Modern UI library
 - **Vite** - Fast build tool
 - **Tailwind CSS** - Utility-first styling
-- **@dnd-kit** - Drag and drop functionality
 - **Lucide React** - Icon library
 
 ### Browser APIs Used
@@ -101,7 +116,7 @@ All data is stored **locally** on your device using `chrome.storage.local`. No d
 ### Changes not showing?
 
 - If you edit the code, you must run `npm run build` again.
-- For development, use `npm run build -- --watch` to auto-rebuild on changes.
+- For development, use `npm run dev` for fast feedback (UI only) or `npm run build -- --watch` for extension testing.
 
 ### Data lost after update?
 
