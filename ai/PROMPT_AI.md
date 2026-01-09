@@ -29,6 +29,16 @@
   chrome.storage.local.set({ key: data });
   ```
 
+### 3.4 Update & Migration Safety (CRITICAL - DO NOT IGNORE)
+
+1.  **NEVER DELETE FALLBACKS**: When migrating storage keys or logic, DO NOT remove the old reading logic/keys for at least **2 major versions**.
+    - _Bug Prevention_: Users skip versions. A user might jump from v1.0 to v2.5. If v2.5 only migrates from v2.0, v1.0 data is lost.
+2.  **Assume Nothing**: Do not assume the old data is perfectly formatted.
+    - _Bad_: `if (!Array.isArray(oldData))` -> Fail.
+    - _Good_: `if (!Array.isArray(oldData))` -> Try to parse/rescue/wrap it. **Never return empty unless data is truly null**.
+3.  **Ghost Backups**: Before any destructive migration (overwriting), save a copy of the raw old data to a "backup" key (e.g., `backup_v1_raw`).
+4.  **Idemptotency**: Migration scripts must be idempotent. Running them 10 times should behave the same as running them once.
+
 ### 3.2 File Structure
 
 - `src/components/`: Reusable React components (with `.test.jsx` files colocated).
@@ -136,7 +146,11 @@
 - ✅ **Services**: Chrome API interactions (mock `chrome.tabs`, `chrome.storage`)
 - ✅ **Components**: User interactions (clicks, inputs, drag-and-drop)
 - ✅ **Edge Cases**: Empty data, null, undefined, invalid inputs
-- ✅ **Storage Migration**: `localStorage` → `chrome.storage.local`
+- ✅ **Storage Migration**:
+  - Test V1 data -> V2 migration
+  - Test **V2 Array data in V1 Key** (Transition states)
+  - Test corrupt data handling (Should not crash/wipe)
+  - Test `localStorage` fallback presence
 
 ### 6.3 Test Structure
 

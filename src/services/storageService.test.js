@@ -113,4 +113,59 @@ describe('storageService', () => {
       expect(localStorage.setItem).toHaveBeenCalledWith(STORAGE_KEY, JSON.stringify(mockData));
     });
   });
+
+  describe('loadLeadsV2 (Migration Logic)', () => {
+    it('should migrate from localStorage if chrome storage is empty (V2 flow)', async () => {
+      // Setup: Empty V2, Empty V1 Chrome, But Data in LocalStorage
+      const mockLegacyData = { folder1: [] };
+      global.chrome.storage.local.get.mockImplementation((keys, callback) => {
+        callback({}); // Chrome empty
+      });
+      global.localStorage.getItem.mockReturnValue(JSON.stringify(mockLegacyData));
+
+      // We need to mock backupV1Data and saveLeadsV2 logic if not mocked by module
+      // But here we are unit testing storageService, so we rely on its internal calls.
+      // We need to verify storage.set is called for V2
+      global.chrome.storage.local.set.mockImplementation((items, cb) => cb && cb());
+
+      const { loadLeadsV2 } = await import('./storageService');
+      const result = await loadLeadsV2();
+
+      // Should be array now (migrated)
+      expect(Array.isArray(result)).toBe(true);
+      expect(result.length).toBe(1); // folder1
+      expect(result[0].name).toBe('folder1');
+      // Should have saved to V2
+      expect(chrome.storage.local.set).toHaveBeenCalledWith(
+        expect.objectContaining({ myLeadsV2: expect.any(Array) }),
+        expect.any(Function)
+      );
+    });
+
+    it('should accept Array data in V1 key (V2 ghost data)', async () => {
+      const ghostData = [{ id: '123', name: 'Ghost', items: [] }];
+      global.chrome.storage.local.get.mockImplementation((keys, callback) => {
+        // If asking for V2, return empty
+        if (keys.includes('myLeadsV2')) {
+          callback({});
+          return;
+        }
+        // If asking for V1, return Array
+        if (keys.includes('myLeads')) {
+          callback({ myLeads: ghostData });
+        }
+      });
+      global.chrome.storage.local.set.mockImplementation((items, cb) => cb && cb());
+
+      const { loadLeadsV2 } = await import('./storageService');
+      const result = await loadLeadsV2();
+
+      expect(result).toEqual(ghostData);
+      // Should have moved to V2 key
+      expect(chrome.storage.local.set).toHaveBeenCalledWith(
+        { myLeadsV2: ghostData },
+        expect.any(Function)
+      );
+    });
+  });
 });

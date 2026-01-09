@@ -173,31 +173,71 @@ export const loadLeadsV2 = async () => {
       if (typeof chrome !== 'undefined' && chrome.storage && chrome.storage.local) {
         chrome.storage.local.get([STORAGE_KEY], async (res) => {
           const v1Raw = res[STORAGE_KEY];
-          if (v1Raw && !Array.isArray(v1Raw)) {
-            // FOUND V1 DATA
-            console.log('Found V1 data, starting migration to V2...');
-            await backupV1Data(); // SAFETY FIRST
-            const v2Data = migrateV1toV2(v1Raw);
+
+          if (v1Raw) {
+            // Case A: Data found in Chrome Storage (V1 Key)
+            console.log('Found legacy data in Chrome Storage...');
+            await backupV1Data(); // Safety Backup
+
+            let v2Data;
+            // CHECK: Is it already an Array? (V2 data saved in V1 key bug)
+            if (Array.isArray(v1Raw)) {
+              console.log('Data is already V2 format (Array). Moving to V2 key.');
+              v2Data = v1Raw;
+            } else {
+              console.log('Data is V1 format (Object). Migrating.');
+              v2Data = migrateV1toV2(v1Raw);
+            }
+
             await saveLeadsV2(v2Data);
             resolve(v2Data);
           } else {
-            // No V1 or it's empty, return empty array
-            resolve([]);
+            // Case B: No data in Chrome Storage V1 Key -> Check LocalStorage (Fallback)
+            // This was missing in v2.0.1 causing the wipe for LS-users.
+            const localV1 = localStorage.getItem(STORAGE_KEY);
+            if (localV1) {
+              console.log('Found legacy data in LocalStorage. Migrating...');
+              try {
+                const parsed = JSON.parse(localV1);
+                await backupV1Data(); // Will backup LS data if Chrome is empty
+
+                let v2Data;
+                if (Array.isArray(parsed)) {
+                  v2Data = parsed;
+                } else {
+                  v2Data = migrateV1toV2(parsed);
+                }
+
+                await saveLeadsV2(v2Data);
+                resolve(v2Data);
+              } catch (e) {
+                console.error('LocalStorage migration failed:', e);
+                resolve([]);
+              }
+            } else {
+              // Case C: Truly no data anywhere
+              resolve([]);
+            }
           }
         });
       } else {
-        // LocalStorage Fallback
+        // LocalStorage Logic (Non-Chrome / Dev Env)
         const v1Raw = localStorage.getItem(STORAGE_KEY);
         if (v1Raw) {
           try {
             const parsed = JSON.parse(v1Raw);
-            if (!Array.isArray(parsed)) {
-              await backupV1Data();
-              const v2Data = migrateV1toV2(parsed);
-              await saveLeadsV2(v2Data);
-              resolve(v2Data);
-              return;
+            await backupV1Data();
+
+            let v2Data;
+            if (Array.isArray(parsed)) {
+              v2Data = parsed;
+            } else {
+              v2Data = migrateV1toV2(parsed);
             }
+
+            await saveLeadsV2(v2Data);
+            resolve(v2Data);
+            return;
           } catch (e) {
             console.error(e);
           }
