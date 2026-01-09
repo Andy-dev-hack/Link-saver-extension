@@ -1,5 +1,6 @@
 {
   "name": "link-saver",
+  "version": "2.0.2",
   "description": "Browser extension to save links into categorized folders with naming and reordering features.",
   "type": "module",
   "scripts": {
